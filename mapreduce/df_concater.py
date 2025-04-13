@@ -56,8 +56,12 @@ class BaseDFConcater(DFConcaterInterface):
         """
         主要方法。
         """
+        # 进行合并。
         result_df = self.concat_dfs_by_directory(self.target_dir)
+        # 保存结果。
         self.save_a_df(result_df, self.path_to_save)
+        # 打印提示。
+        print(f"合并完成，保存至{str(self.path_to_save)}")
 
     def concat_dfs_by_directory(
         self,
@@ -71,8 +75,12 @@ class BaseDFConcater(DFConcaterInterface):
         Return:
             合并后的df。
         """
+        # pipeline
+        # 获取待处理df路径。
         df_path_list = self.get_df_path_list(target_dir)
+        # 读取df。
         df_list = self._get_df_list(df_path_list)
+        # 执行合并。
         result_df = self.concat_df(df_list)
         return result_df
 
@@ -88,6 +96,7 @@ class BaseDFConcater(DFConcaterInterface):
         Return:
             list[pd.DataFrame], 一个列表，内容是所有的df。
         """
+        # 使用interface中的读取df的方法，批量读取df。
         df_list = [
             self.read_a_df(df_path) for df_path in df_path_list
         ]
@@ -106,6 +115,7 @@ class BaseDFConcater(DFConcaterInterface):
             list[Path], 一个列表，内容是所有的df的路径。
         """
         target_dir = Path(target_dir)  # 冗余构建Path对象，确保可是正常使用Path相关方法。
+        # 检索一个文件夹下所有的文件，记录为待处理的df的路径。
         df_path_list = [df_path for df_path in target_dir.iterdir() if df_path.is_file()]
         return df_path_list
     
