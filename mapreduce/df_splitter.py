@@ -50,13 +50,22 @@ class BaseDfSplitter(DfSplitterInterface):
         df: pd.DataFrame,
         num_splits: int
     ) -> list[pd.DataFrame]:
-        chunk_size = len(df) // num_splits + 1
-        chunks = []
-        for i in range(num_splits + 1):
-            start = i * chunk_size
-            end = None if i == chunk_size - 1 else (i + 1) * chunk_size
-            chunks.append(df[start:end])
+        """
 
+        Args:
+            df: 待被分割的df。
+            num_splits: 指定的切片的数量。
+        Returns:
+            一个列表，其中的元素为已经按顺序做好的切片。
+        """
+        # 计算每个分割块的长度，向上取整，保证不遗漏，又大小近似。
+        chunk_size = len(df) // num_splits + 1
+        # 进行划分。
+        chunks = []
+        for i in range(num_splits):  # 构建指定数量的切片。
+            start = i * chunk_size  # 起始位置从正常index开始。
+            end = (i + 1) * chunk_size - 1  # 结束位置由下一index开始，-1不重叠。
+            chunks.append(df[start:end])  # pandas会自动处理超界index。
         return chunks
 
     def get_file_names_list(self) -> list[str]:
