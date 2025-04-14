@@ -72,7 +72,7 @@ class BaseDFConcater(DFConcaterInterface):
 
         Args:
             target_dir: target_dir: 需要进行连接的文件夹目录。
-        Return:
+        Returns:
             合并后的df。
         """
         # pipeline
@@ -93,7 +93,7 @@ class BaseDFConcater(DFConcaterInterface):
 
         Args:
             df_path_list: 待合并的df路径的列表。默认是类中方法get_df_path_list返回的结果。
-        Return:
+        Returns:
             list[pd.DataFrame], 一个列表，内容是所有的df。
         """
         # 使用interface中的读取df的方法，批量读取df。
@@ -111,7 +111,7 @@ class BaseDFConcater(DFConcaterInterface):
 
         Args:
             target_dir: 需要进行连接的文件夹目录。
-        Return:
+        Returns:
             list[Path], 一个列表，内容是所有的df的路径。
         """
         target_dir = Path(target_dir)  # 冗余构建Path对象，确保可是正常使用Path相关方法。
@@ -125,7 +125,7 @@ class BaseDFConcater(DFConcaterInterface):
         
         Args:
             df_list: 以列表形式给出的df。
-        Return: 
+        Returns:
             合并后的结果。
         """
         return pd.concat(df_list, ignore_index=True)
