@@ -52,6 +52,9 @@ class BaseDFConcater(DFConcaterInterface):
         self.target_dir = Path(target_dir)
         self.path_to_save = Path(path_to_save)
 
+        # 冗余性检查，保存路径需要存在。
+        self.path_to_save.parent.mkdir(parents=True, exist_ok=True)
+
     def run(self, **kwargs):
         """
         主要方法。
@@ -72,6 +75,7 @@ class BaseDFConcater(DFConcaterInterface):
 
         Args:
             target_dir: target_dir: 需要进行连接的文件夹目录。
+
         Returns:
             合并后的df。
         """
@@ -93,6 +97,7 @@ class BaseDFConcater(DFConcaterInterface):
 
         Args:
             df_path_list: 待合并的df路径的列表。默认是类中方法get_df_path_list返回的结果。
+
         Returns:
             list[pd.DataFrame], 一个列表，内容是所有的df。
         """
@@ -111,6 +116,7 @@ class BaseDFConcater(DFConcaterInterface):
 
         Args:
             target_dir: 需要进行连接的文件夹目录。
+
         Returns:
             list[Path], 一个列表，内容是所有的df的路径。
         """
@@ -125,6 +131,7 @@ class BaseDFConcater(DFConcaterInterface):
         
         Args:
             df_list: 以列表形式给出的df。
+
         Returns:
             合并后的结果。
         """
