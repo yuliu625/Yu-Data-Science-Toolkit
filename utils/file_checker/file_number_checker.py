@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 
 
 def check_file_number(
-    dir_path: str | Path
+    dir_path: str | Path,
 ) -> int:
     """
     检测一个文件夹下有多少个文件。
