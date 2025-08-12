@@ -1,5 +1,7 @@
 """
 文本预处理工具。
+
+对中文文本进行分词的方法。
 """
 
 from __future__ import annotations
@@ -12,7 +14,7 @@ from typing import TYPE_CHECKING, Literal
 # if TYPE_CHECKING:
 
 
-class ZHTextPreProcessingTools:
+class ZHTokenizingMethods:
     """
     中文文本的预处理方法。
     """
@@ -27,13 +29,13 @@ class ZHTextPreProcessingTools:
         if path_to_stopwords is None:
             stopwords = set(custom_stopwords)
         else:
-            stopwords = ZHTextPreProcessingTools.load_stopwords(
+            stopwords = ZHTokenizingMethods.load_stopwords(
                 path_to_stopwords,
                 custom_stopwords,
             )
         # 进行分词。
         if tokenize_method == 'jieba':
-            result = ZHTextPreProcessingTools.tokenize_text_by_jieba(
+            result = ZHTokenizingMethods.tokenize_text_by_jieba(
                 text=text,
                 stopwords=stopwords,
             )
