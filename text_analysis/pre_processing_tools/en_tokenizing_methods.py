@@ -19,7 +19,15 @@ from typing import TYPE_CHECKING
 # if TYPE_CHECKING:
 
 
-class TextPreProcessingTools:
+class ENTokenizingMethods:
+    """
+    基于nltk的分词方法。
+
+    主要方法:
+        - simple_tokenize_text: 简单的的基于re的分词方法。
+        - tokenize_text: 基于nltk的标准分词方法。
+        - download_for_nltk: 下载该工具类使用nltk的必要依赖。
+    """
     # ====暴露方法。====
     @staticmethod
     def simple_tokenize_text(
@@ -45,9 +53,9 @@ class TextPreProcessingTools:
     def tokenize_text(
         text: str,
     ) -> list[str]:
-        tokens = TextPreProcessingTools.get_tokens(text=text)
-        filtered_tokens = TextPreProcessingTools.filter_stopwords(tokens=tokens)
-        result_tokens = TextPreProcessingTools.lemmatize_tokens(tokens=filtered_tokens)
+        tokens = ENTokenizingMethods.get_tokens(text=text)
+        filtered_tokens = ENTokenizingMethods.filter_stopwords(tokens=tokens)
+        result_tokens = ENTokenizingMethods.lemmatize_tokens(tokens=filtered_tokens)
         return result_tokens
 
     # ====工具方法。====
