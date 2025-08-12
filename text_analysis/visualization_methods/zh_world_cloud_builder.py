@@ -4,7 +4,7 @@
 
 from __future__ import annotations
 
-from text_analysis.pre_processing_tools.zh_pre_processing_tools import ZHTextPreProcessingTools
+from text_analysis.pre_processing_tools.zh_tokenizing_methods import ZHTokenizingMethods
 
 from wordcloud import WordCloud
 from pathlib import Path
@@ -61,7 +61,7 @@ class ZHWordCloudBuilder:
         Returns:
             set[str]:
         """
-        stopwords = ZHTextPreProcessingTools.load_stopwords(
+        stopwords = ZHTokenizingMethods.load_stopwords(
             path_to_stopwords=path_to_stopwords,
             custom_stopwords=custom_stopwords,
         )
@@ -72,7 +72,7 @@ class ZHWordCloudBuilder:
         original_text: str,
         stopwords: set[str],
     ) -> str:
-        filtered_words = ZHTextPreProcessingTools.tokenize_text_by_jieba(
+        filtered_words = ZHTokenizingMethods.tokenize_text_by_jieba(
             text=original_text,
             stopwords=stopwords,
         )
