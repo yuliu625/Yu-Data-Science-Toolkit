@@ -45,11 +45,11 @@ class BatchConfigurationGenerator:
             None: 保存配置文件至指定路径。
         """
         # 读取模板文件。不限制文件类型。
-        with open(template_path, "r", encoding="utf-8") as template:
+        with open(template_path, 'r', encoding='utf-8') as template:
             template = Template(template.read())
         # 填入配置。
         configuration = template.render(**configs_kwargs)
         # 保存配置文件。
-        with open(path_to_save, "w", encoding="utf-8") as file:
+        with open(path_to_save, 'w', encoding='utf-8') as file:
             file.write(configuration)
 
