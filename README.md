@@ -1,69 +1,84 @@
 # Data Science Toolkit
+A comprehensive suite of common data science tools developed for scientific research tasks. It aims to enhance the efficiency and reproducibility of data processing, statistical analysis, and visualization through modular code encapsulation.
 
-## Overview
-This is a lean **Data Science Toolkit** specifically designed for developers and data scientists who prioritize efficiency, code reusability, and high-quality data insights.
-
-I have integrated core methodologies and **plug-and-play code modules** for essential data science tasks, ranging from data preprocessing and statistical analysis to foundational machine learning and visualization.
-
-My core goal is to build a **lightweight, flexible, and highly reusable toolbox** that can tackle complex data tasks quickly and efficiently, allowing you to focus on insights rather than repetitive configuration.
+This repository distills core methodologies frequently used in research analysis, breaking down complex tasks into plug-and-play logical modules. This allows researchers to break free from tedious engineering configurations and focus on core data insights and interpretation.
 
 
-## Core Design Philosophy: Reusability and Reliability
-Based on efficient workflows summarized from extensive data practice, I adhere to the following two core principles to ensure the toolkit's reliability and scalability:
+## 🛠️ Core Architecture & Design Philosophy: Reusability & Reliability
+Based on high-efficiency workflows summarized from extensive data practice, I follow two core principles to ensure tool reliability and scalability:
 
-### Standardized and Efficient Data File Formats
-To achieve flexibility, convenience, and stable performance in data processing, I prioritize and provide default conversion methods to and from other formats (like CSV/Excel):
-- **JSONLines (.jsonl):** The data foundation. Flexibly supports various complex nested data types, convenient for stream processing and log storage.
-- **SQLite (.db):** Embedded database. Provides a unified handling method. It's a small, zero-configuration database, making it easy to process data using SQL across different programming languages.
-- **DUCKDB (.duckdb):** Embedded analytical database. A direction I am progressively supporting for high-performance analysis.
+### Standardized & Efficient Data File Formats (Legacy)
+To achieve flexibility, convenience, and performance stability in data handling, I provide default conversion methods for various formats (e.g., CSV/Excel) with a preference for:
+- **JSONLines (.jsonl)**: The data foundation. Flexibly supports complex nested data types; ideal for stream processing and logging.
+- **SQLite (.db)**: Embedded database with unified processing methods. A small, zero-configuration database that allows for consistent SQL-based data manipulation across different programming languages.
+- **DuckDB (.duckdb)**: Embedded analytical database. High-performance analytics, representing one of the strategic directions I am progressively supporting.
 
-### Functional Programming and Reliable Data Pipeline
-Our data processing flow is inspired by functional programming to build data processing pipelines that are **composable, cacheable, and easily extendable**:
-- **Cacheable:** Allows saving intermediate results, which not only speeds up repeated computations but also facilitates debugging and inspecting the output of each step.
-- **Composable:** Different processing modules can be freely combined like building blocks, achieving high code reuse and flexible workflow construction.
-- **Easily Extendable:** While avoiding over-engineering, necessary space is reserved for future expansion based on specific needs.
-
-
-## Key Content Modules
-This toolkit includes the following core modules. All functions are designed as single files or concise classes, allowing for quick insertion into specific projects. Functionality is continuously being updated. Please refer to the detailed documentation and source code for specific methods.
-
-### Data Processing
-Focuses on optimizing data I/O, quality assurance, and structural transformation.
-- **Data Acceleration:** General data processing acceleration methods. Speeds up I/O-intensive and compute-intensive tasks through asynchronous programming and multithreading.
-- **Data Cleaning:** Data cleaning and quality management. Includes handling missing values, outlier detection and treatment, and data type validation and conversion.
-- **Feature Engineering:** Feature engineering processing methods. Includes data imputation, standardization, one-hot encoding, etc.
-
-### Statistical Analysis
-Based on libraries like `statsmodel`, this module enables quick execution of common statistical and econometric analyses and preliminary tests to guide subsequent modeling directions.
-- **Descriptive Stats:** Descriptive statistical methods. Quickly view data shape, distribution, and correlation.
-- **Hypothesis Testing:** Common hypothesis testing methods. Provides tools for parametric and non-parametric tests.
-- **Regression Models:** Tools for basic, general regression analysis methods.
-
-*Note: This module provides basic, general-purpose tools. Comprehensive regression analysis often requires specific data handling and model construction.*
-
-### Machine Learning
-Primarily based on `sklearn`, this module focuses on general data preprocessing, observation of data shape, and model evaluation.
-- **Unsupervised Learning:** Unsupervised learning methods. Used for data clustering, dimensionality reduction, and anomaly detection.
-- **Model Evaluation:** Model evaluation metrics and cross-validation tools.
-
-*Note: This module emphasizes general data preprocessing and analysis. For complex supervised learning tasks, a better approach may be to build a specialized data pipeline or use deep learning models.*
-
-### Text Analysis
-Supports non-deep-learning NLP tasks, primarily used for high-interpretability text analysis and visualization of text data results.
-- **Text Preprocessing:** Text preprocessing. Includes tokenization, sentence splitting, standardization, and text vectorization.
-- **Text Computing:** Text computation. Includes rule-based, statistical-learning-based, and foundational machine-learning-based computation methods.
-- **Text Visualization:** Text result visualization. Includes word cloud generation, topic model result display, text semantic clustering display, etc.
-
-*Note: For high-performance and high-accuracy text tasks, the current mainstream approach is based on deep learning, especially LLMs. You may check my other related repositories.*
-
-### Quick Visualization
-Built upon libraries like Plotly, this module is used to stably and efficiently generate high-quality, interactive visualizations.
-- **Data Explore:** Quick exploratory visualization. Presets various methods to view data shape, distribution, and interrelationships.
-- **Data Report:** Academic paper configuration. Summarizes common visualization color schemes, fonts, and layout configurations used in high-quality academic papers.
+### Functional Programming & Reliable Data Pipelines
+Drawing from functional programming paradigms, I build composable processing workflows with traceable states:
+- **Caching**: Supports automatic saving of intermediate results to avoid redundant computation and facilitate auditing of every experimental step.
+- **Composability**: Modules are designed with decoupling in mind, allowing them to be assembled like building blocks to increase the reuse rate of core algorithms across different projects.
+- **Extensibility**: While remaining lightweight, interfaces are reserved for specific research needs to avoid over-engineering.
 
 
-## More of My Projects
-If you are interested in similar tasks, you are welcome to check out my other repositories focused on specific domains:
-- [**Deep-Learning-Toolkit**](https://github.com/yuliu625/Yu-Deep-Learning-Toolkit): A general toolkit for deep learning tasks.
-- [**Agent-Development-Toolkit**](https://github.com/yuliu625/Yu-Agent-Development-Toolkit): A toolkit focused on building LLMs and Agents.
+## 🚀 Performance Evolution: From Pandas to Modern Architectures
+> **Important Update:** As data scales grow, this project is progressively migrating from the traditional `Pandas/JSONL` stack to a high-performance computing architecture.
+
+### Migration Motivations & Direction:
+- **Compute Engine: From Pandas to Polars**
+For large-scale experimental data, Pandas is often limited by single-core performance and memory overflows. By introducing **Polars**, we leverage its multi-threaded parallel engine and Lazy Evaluation to significantly reduce memory consumption and boost efficiency in million-row processing scenarios.
+- **Memory Standard: Based on Apache Arrow**
+Adopting **Arrow** as the unified standard for in-memory data eliminates serialization/deserialization overhead between different tools, enabling "zero-copy" integration with high-performance backends like DuckDB.
+- **Storage Optimization: Parquet & Avro**
+  - **Parquet**: For analytical tasks (OLAP), utilizing columnar storage and high compression ratios to drastically reduce disk I/O during scientific computing.
+  - **Avro**: For streaming data or scenarios with frequent schema changes, ensuring robust data structure integrity.
+
+
+## 📂 Core Modules Overview
+To help you quickly locate the required functionality, the table below summarizes the main capabilities of this toolkit:
+
+| Task | Core Module | Key Problem Solved | Core Tech Stack |
+| --- | --- | --- | --- |
+| **Data Processing** | Data Processing | I/O acceleration, async cleaning, feature engineering | Polars / Arrow |
+| **Statistical Analysis** | Statistical Analysis | Descriptive stats, hypothesis testing, basic regression | statsmodels / scipy |
+| **Machine Learning** | Machine Learning | Unsupervised learning, model evaluation, preprocessing pipelines | scikit-learn |
+| **Text Analysis** | Text Analysis | Interpretable NLP, text vectorization, semantic clustering | NLTK / Scikit-learn |
+| **Quick Viz** | Quick Visualization | Interactive exploration, **academic-standard plotting** | Plotly |
+
+
+### 🔍 Module Details
+#### 🛠️ Data Processing
+Focuses on I/O optimization, quality assurance, and structural transformation.
+- **Data Acceleration**: Accelerates I/O-intensive and compute-intensive tasks via asynchronous programming and multi-threading.
+- **Data Cleaning**: Includes missing value handling, outlier detection, and strict data type validation.
+- **Feature Engineering**: Plug-and-play transformation methods such as normalization and One-Hot encoding.
+
+#### 📊 Statistical Analysis
+Based on statistical principles to quickly verify data patterns and guide modeling directions.
+- **Descriptive Stats**: Rapidly inspect distributions and correlations.
+- **Hypothesis Testing**: Provides both parametric and non-parametric testing tools.
+- **Regression Models**: General-purpose regression tools for quick benchmarking.
+
+#### 🤖 Machine Learning
+Focuses on general preprocessing and model observation.
+- **Unsupervised Learning**: Used for data clustering, dimensionality reduction, and anomaly detection.
+- **Model Evaluation**: Provides multi-dimensional metric evaluation and cross-validation tools.
+
+#### 📝 Text Analysis
+Aimed at highly interpretable, non-deep learning tasks.
+- **Text Computing**: Calculation methods based on rules and statistics.
+- **Text Visualization**: Word cloud generation, topic model display, and semantic clustering visualization.
+
+*Note: For high-performance NLP tasks, please refer to my [Deep-Learning-Toolkit](https://github.com/yuliu625/Yu-Deep-Learning-Toolkit).*
+
+#### 📈 Quick Visualization
+Built on libraries like `Plotly` to balance "interactivity" with "publication quality."
+- **Data Explore**: Pre-set methods for viewing data distributions and relationships.
+- **Data Report**: **Academic Paper Configurations**. Summarizes color schemes, fonts, and layout standards commonly used in top-tier journals for one-click plotting.
+
+## 🔗 Related Toolkits
+This repository is part of my personal research toolchain. You can use it alongside the following:
+- **[RAG-Toolkit](https://github.com/yuliu625/Yu-RAG-Toolkit)**: Core retrieval-augmented generation tools.
+- **[Agent-Development-Toolkit](https://github.com/yuliu625/Yu-Agent-Development-Toolkit)**: Focused on LLM Agent logic construction.
+- **[Deep-Learning-Toolkit](https://github.com/yuliu625/Yu-Deep-Learning-Toolkit)**: A foundation for general deep learning tasks.
+- **[Data-Science-Toolkit](https://github.com/yuliu625/Yu-Data-Science-Toolkit)**: Data science and preprocessing utilities.
 
