@@ -1,67 +1,82 @@
 # Data Science Toolkit
+这是一个面向科研任务开发的数据科学常用工具集，旨在通过代码的模块化封装，提升数据处理、统计分析及可视化工作的效率与可复现性。
 
-## 概述
-这是一个专为追求效率、代码复用和高质量数据洞察而设计的数据科学精简工具集。
-
-我整合了从数据预处理、统计分析到基础机器学习和可视化等数据科学任务中的核心方法论和即插即用的代码模块。
-
-我的核心目标是: 构建一个轻量、灵活、高度可复用的工具箱，能够快速、高效地完成复杂的数据任务，专注于洞察而非重复配置。
+本仓库提炼了科研分析中高频使用的核心方法论，将复杂的任务拆解为即插即用的逻辑模块，从而使研究能够从繁琐的工程配置中解脱出来，专注于核心数据的洞察与解释。
 
 
-## 核心设计理念: 可复用性与可靠性
+## 🛠️ 核心架构和设计理念: 可复用性与可靠性
 我基于在大量数据实践中总结出的高效流程，遵循以下两大核心原则，确保工具的可靠性与可扩展性:
-### 统一高效的数据文件格式标准
+### 统一高效的数据文件格式标准 (Legacy)
 为实现数据处理的灵活性、便捷性与性能的稳定，我优先支持并提供了与其他格式(如 CSV/Excel)的默认转换方法:
 - JSONLines(.jsonl): 数据基础。灵活支持各种复杂嵌套数据类型，方便流式处理和日志存储。
 - SQLite(.db): 嵌入式数据库。统一处理方法。小型、零配置数据库，方便各种编程语言统一使用 SQL 进行数据处理。
 - DUCKDB(.duckdb): 嵌入式分析数据库。高性能分析，我逐步支持的方向之一。
 
-### 函数式编程与可靠的数据pipeline
-我们的数据处理流程借鉴了函数式编程思想，以构建可组合、可缓存、易于扩展的数据处理pipeline:
-- 可缓存: 允许保存中间结果，不仅能加速重复计算，也便于调试和检查每一步的输出。
-- 可组合: 将不同的处理模块像积木一样自由组合，实现高度的代码复用和灵活的流程构建。
-- 易于扩展: 在避免过度设计的同时，预留了必要的扩展空间，以便于未来根据具体需求进行功能扩展。
+### 函数式编程与可靠的数据流水线 (Pipeline)
+借鉴函数式编程范式，构建可组合且状态可追踪的处理流程:
+- **可缓存性 (Caching)**：支持自动保存中间计算结果，既能避免重复计算开销，也便于对实验每一步的输出进行核查与审计。
+- **可组合性 (Composability)**：处理模块采用解耦设计，支持像积木般灵活组合，提高核心算法在不同课题间的复用率。
+- **可扩展性 (Extensibility)**：在保持轻量化的前提下，为特定科研需求留出接口，避免过度工程化。
 
 
-## 主要内容模块
-本工具集包含以下核心模块，所有功能都被设计为单一文件或精简类，能够快捷地插入到具体项目中。功能仍在持续更新中，具体方法请查阅各模块的详细文档和源代码。
-### Data Processing
+## 🚀 性能演进：从 Pandas 转向现代架构
+> **重要更新:** 随着数据规模的扩大，本项目正逐步从传统的 `Pandas/JSONL` 堆栈向高性能计算架构迁移。
+
+### 迁移方向与动机:
+- **计算引擎: 从 Pandas 转向 Polars** 针对大规模实验数据，Pandas 易受单核性能与内存溢出的限制。通过引入 **Polars**，利用其多线程并行引擎与惰性求值（Lazy Evaluation）特性，在百万级数据处理中显著降低内存消耗并提升运行效率。
+- **内存标准: 基于 Apache Arrow** 采用 **Arrow** 作为内存中数据的统一标准，消除不同处理工具间数据传递的序列化/反序列化成本，实现与 DuckDB 等高性能后端间的“零拷贝”集成。
+- **存储优化: Parquet & Avro**
+  - **Parquet**: 针对分析型任务（OLAP），利用其列式存储与高压缩比，大幅减少科学计算过程中的磁盘 I/O。
+  - **Avro**: 针对流式数据或结构变动频繁的场景，确保数据 Schema 的鲁棒性。
+
+
+## 📂 核心模块概览
+为了方便快速定位所需功能，下表概括了本工具集的主要能力范围:
+
+| 任务 | 核心模块 | 主要解决问题 | 核心技术栈 |
+|-----------| --- | --- | --- |
+| **数据处理**  | Data Processing | I/O 加速、异步清洗、特征工程 | Polars / Arrow |
+| **统计分析**  | Statistical Analysis | 描述统计、假设检验、基础回归分析 | statsmodels / scipy |
+| **机器学习**  | Machine Learning | 无监督学习、模型评估、预处理 Pipeline | scikit-learn |
+| **文本分析**  | Text Analysis | 高可解释性 NLP、文本向量化、语义聚类 | NLTK / Scikit-learn |
+| **快捷可视化** | Quick Visualization | 交互式探索、**学术论文规范配图** | Plotly |
+
+
+### 🔍 模块说明
+#### 🛠️ Data Processing
 专注于数据的 I/O 优化、质量保障和结构化转换。
-- Data Acceleration: 通用数据处理加速方法。通过异步编程和多线程，加速 I/O 密集型和计算密集型任务。
-- Data Cleaning: 数据清洗与质量管理。包括缺失值处理、异常值检测与处理、数据类型校验与转换。
-- Feature Engineering: 特征工程处理方法。包括数据填充、标准化、独热编码等。
+- **Data Acceleration**: 通过异步编程和多线程，加速 I/O 密集型和计算密集型任务。
+- **Data Cleaning**: 包含缺失值处理、异常值检测及数据类型严格校验。
+- **Feature Engineering**: 标准化、独热编码等即插即用的特征转换方法。
 
-### Statistical Analysis
-基于 `statsmodel` 等库，快速进行常用的统计与计量分析和初步检验，以指导后续的建模方向。
-- Descriptive Stats: 描述统计方法。快速查看数据形态、分布和关联性。
-- Hypothesis Testing: 常见的假设检验方法。提供参数检验和非参数检验工具。
-- Regression Models: 基础通用回归分析方法工具。
+#### 📊 Statistical Analysis
+基于统计学原理，快速进行数据形态验证，指导建模方向。
+- **Descriptive Stats**: 快速查看分布和关联性。
+- **Hypothesis Testing**: 提供参数与非参数检验工具。
+- **Regression Models**: 基础通用回归工具，用于快速基准测试。
 
-注意: 此模块提供基础通用工具。完整的回归分析通常需要特定的数据处理和模型构建。
+#### 🤖 Machine Learning
+侧重于通用预处理和模型观测。
+- **Unsupervised Learning**: 用于数据的聚类、降维和异常检测。
+- **Model Evaluation**: 提供多维度的模型指标评估和交叉验证工具。
 
-### Machine Learning
-主要基于`sklearn`，专注于通用数据预处理、数据形态观测和模型评估。
-- Unsupervised Learning: 无监督学习方法。用于数据的聚类、降维和异常检测。
-- Model Evaluation: 模型评估指标和交叉验证工具。
+#### 📝 Text Analysis
+面向高可解释性的非深度学习任务。
+- **Text Computing**: 基于规则与统计的计算方法。
+- **Text Visualization**: 词云生成、主题模型展示及语义聚类可视化。
 
-注意: 此模块侧重于通用数据预处理和分析。对于复杂的监督学习任务，更好的做法可能是构建专门的数据pipeline或使用深度学习模型。
+*注：高性能 NLP 任务建议参考我的 [Deep-Learning-Toolkit](https://github.com/yuliu625/Yu-Deep-Learning-Toolkit)。*
 
-### Text Analysis
-非深度学习的 NLP 任务支持，多用于高可解释性文本分析和文本数据的结果可视化。
-- Text Preprocessing: 文本预处理。包括分词、分句、标准化和文本向量化。
-- Text Computing: 文本计算。包括基于规则、基于统计学习和基于基础机器学习的计算方法。
-- Text Visualization: 文本结果可视化。包括词云生成、主题模型结果展示、文本语义聚类展示等。
-
-注意: 面向高性能和高准确性的文本任务，当下主流是基于深度学习，尤其是LLM。你可以查看我其他的相关仓库。
-
-### Quick Visualization
-基于 Plotly 等库构建，用于稳定、高效生成高质量、可交互的可视化图表。
-- Data Explore: 快速探索性可视化，预置多种查看数据形态、分布和相互关系的方法。
-- Data Report: 学术论文配置。总结了优秀学术论文中常用的可视化配色、字体和布局配置等。
+#### 📈 Quick Visualization
+基于 `Plotly` 等库构建，平衡“交互性”与“出版质量”。
+- **Data Explore**: 预置多种查看数据分布和相互关系的方法。
+- **Data Report**: **学术论文配置**。总结了顶级期刊常用的配色、字体和布局规范，实现一键出图。
 
 
-## 更多我的项目
-如果你对类似的任务感兴趣，欢迎查看我的其他专注于特定领域的仓库:
-- [Deep-Learning-Toolkit](https://github.com/yuliu625/Yu-Deep-Learning-Toolkit): 一个用于深度学习任务的通用工具集。
-- [Agent-Development-Toolkit](https://github.com/yuliu625/Yu-Agent-Development-Toolkit): 专注于LLM和Agent构建的工具集。
+## 🔗 系列工具箱
+该仓库是我个人科研工具链的一部分，你可以配合以下仓库使用:
+- **[RAG-Toolkit](https://github.com/yuliu625/Yu-RAG-Toolkit)**: 核心检索增强工具集。
+- **[Agent-Development-Toolkit](https://github.com/yuliu625/Yu-Agent-Development-Toolkit)**: 专注于智能体(Agents)逻辑构建。
+- **[Deep-Learning-Toolkit](https://github.com/yuliu625/Yu-Deep-Learning-Toolkit)**: 深度学习通用任务底座。
+- **[Data-Science-Toolkit](https://github.com/yuliu625/Yu-Data-Science-Toolkit)**: 数据科学与预处理工具。
 
