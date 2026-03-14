@@ -1,10 +1,19 @@
 """
-jsonl文件转换器。
+Sources:
+    https://github.com/yuliu625/Yu-Data-Science-Toolkit/data_processing/jsonl_converter.py
 
-统一将各种格式的文件转换为jsonl文件。
+References:
+    None
+
+Synopsis:
+    jsonl文件转换器。
+
+Notes:
+    统一将各种格式的文件转换为jsonl文件。
 """
 
 from __future__ import annotations
+from loguru import logger
 
 import pandas as pd
 from pathlib import Path
